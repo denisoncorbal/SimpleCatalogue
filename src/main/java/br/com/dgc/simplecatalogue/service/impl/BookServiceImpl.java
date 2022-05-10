@@ -1,7 +1,7 @@
 package br.com.dgc.simplecatalogue.service.impl;
 
 import br.com.dgc.simplecatalogue.model.entity.Book;
-import br.com.dgc.simplecatalogue.repository.BookRepository;
+import br.com.dgc.simplecatalogue.repository.impl.BookRepositoryImpl;
 import br.com.dgc.simplecatalogue.service.WorkService;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +10,9 @@ import java.util.List;
 @Service
 public class BookServiceImpl implements WorkService<Book> {
 
-    private final BookRepository repository;
+    private final BookRepositoryImpl repository;
 
-    public BookServiceImpl(BookRepository repository){
+    public BookServiceImpl(BookRepositoryImpl repository){
         this.repository = repository;
     }
 
