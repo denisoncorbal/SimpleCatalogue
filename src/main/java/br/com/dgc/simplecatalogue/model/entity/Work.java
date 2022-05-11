@@ -1,45 +1,57 @@
 package br.com.dgc.simplecatalogue.model.entity;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 
+/**
+ * Generalization of any kind of work to Database Entity representation.
+ *
+ * @since 1.0
+ */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Work implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idWork;
-    @Column(nullable = false)
-    private String name;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long idWork;
 
-    @OneToMany(mappedBy="work")
-    private Set<Copy> copies;
+  @Column(nullable = false)
+  private String name;
 
-    public Work() {
-    }
+  @OneToMany(mappedBy = "work")
+  private Set<Copy> copies;
 
-    public Long getIdWork() {
-        return idWork;
-    }
+  public Work() {}
 
-    public String getName() {
-        return name;
-    }
+  public Long getIdWork() {
+    return idWork;
+  }
 
-    public void setIdWork(Long idWork) {
-        this.idWork = idWork;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setIdWork(Long idWork) {
+    this.idWork = idWork;
+  }
 
-    public Set<Copy> getCopies() {
-        return copies;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setCopies(Set<Copy> copies) {
-        this.copies = copies;
-    }
+  public Set<Copy> getCopies() {
+    return copies;
+  }
+
+  public void setCopies(Set<Copy> copies) {
+    this.copies = copies;
+  }
 }
