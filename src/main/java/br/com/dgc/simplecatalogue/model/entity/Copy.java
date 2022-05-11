@@ -11,4 +11,20 @@ public class Copy {
     @ManyToOne
     @JoinColumn(name = "idWork", nullable = false)
     private Work work;
+
+    public Long getIdCopy() {
+        return idCopy;
+    }
+
+    public void setIdCopy(Long idCopy) {
+        this.idCopy = idCopy;
+    }
+
+    public Work getWork() {
+        return work;
+    }
+
+    public void setWork(Work work) {
+        this.work = work;
+    }
 }

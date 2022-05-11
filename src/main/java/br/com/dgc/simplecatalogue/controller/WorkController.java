@@ -21,6 +21,7 @@ public interface WorkController<T extends Work> {
 
     // Read
     ResponseEntity<List<T>> read();
+    ResponseEntity<T> readById(Long id);
 
     // Update
     ResponseEntity<T> update(@Valid @PathVariable Long id, @Valid @RequestBody T work);

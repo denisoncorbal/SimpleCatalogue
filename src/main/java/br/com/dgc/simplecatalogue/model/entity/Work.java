@@ -34,4 +34,12 @@ public abstract class Work implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Set<Copy> getCopies() {
+        return copies;
+    }
+
+    public void setCopies(Set<Copy> copies) {
+        this.copies = copies;
+    }
 }

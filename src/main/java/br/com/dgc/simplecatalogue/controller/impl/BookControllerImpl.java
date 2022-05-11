@@ -31,6 +31,12 @@ public class BookControllerImpl implements WorkController<Book> {
     public ResponseEntity<List<Book>> read(){
         return ResponseEntity.ok(service.read());
     }
+
+    @Override
+    @GetMapping("/{id}")
+    public ResponseEntity<Book> readById(@Valid @PathVariable Long id){
+        return ResponseEntity.ok(service.readById(id));
+    }
     // Update
     @Override
     @PutMapping("/{id}")

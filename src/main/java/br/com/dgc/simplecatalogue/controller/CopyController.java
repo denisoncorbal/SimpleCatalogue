@@ -29,6 +29,11 @@ public class CopyController {
     public ResponseEntity<List<Copy>> read(){
         return ResponseEntity.ok(service.read());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Copy> readById(@Valid @PathVariable Long id){
+        return ResponseEntity.ok(service.readById(id));
+    }
     // Update
     @PutMapping("/{id}")
     public ResponseEntity<Copy> update(@Valid @PathVariable Long id, @Valid @RequestBody Copy copy){
