@@ -19,11 +19,6 @@ public class SimpleCatalogueApplication {
    * @param args Comand line parameters. Not used on this application.
    */
   public static void main(String[] args) {
-    try (ConfigurableApplicationContext context =
-        SpringApplication.run(SimpleCatalogueApplication.class, args)) {
-      System.out.println("Inicialização com êxito");
-    } catch (Exception e) {
-      System.out.println("Erro de inicialização");
-    }
+    SpringApplication.run(SimpleCatalogueApplication.class, args);
   }
 }

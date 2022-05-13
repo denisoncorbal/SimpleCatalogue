@@ -1,6 +1,7 @@
 package br.com.dgc.simplecatalogue.model.entity;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,7 +30,17 @@ public abstract class Work implements Serializable {
   @OneToMany(mappedBy = "work")
   private Set<Copy> copies;
 
-  public Work() {}
+  public Work() {
+    this.idWork = 0L;
+    this.name = "";
+    this.copies = Collections.emptySet();
+  }
+
+  public Work(Long idWork, String name, Set<Copy> copies){
+    this.idWork = idWork;
+    this.name = name;
+    this.copies = copies;
+  }
 
   public Long getIdWork() {
     return idWork;

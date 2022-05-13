@@ -20,6 +20,10 @@ import org.springframework.hateoas.server.core.Relation;
 @Relation(itemRelation = "work")
 public class BookModelImpl extends WorkModel<BookModelImpl> {
 
+  public BookModelImpl(){
+    super();
+  }
+
   /**
    * All args constructor used by Builder Pattern.
    *
@@ -30,9 +34,7 @@ public class BookModelImpl extends WorkModel<BookModelImpl> {
    * @since 1.0
    */
   public BookModelImpl(Long idWork, String name, Set<CopyModel> copies) {
-    super.setIdWork(idWork);
-    super.setName(name);
-    super.setCopies(copies);
+    super(idWork, name, copies);
   }
 
   public static BookModelBuilder builder() {

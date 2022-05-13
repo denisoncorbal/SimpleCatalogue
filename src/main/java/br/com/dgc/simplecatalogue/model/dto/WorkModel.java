@@ -1,6 +1,7 @@
 package br.com.dgc.simplecatalogue.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import java.util.Collections;
 import java.util.Set;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -14,6 +15,18 @@ import org.springframework.hateoas.RepresentationModel;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public abstract class WorkModel<T extends WorkModel<? extends T>> extends RepresentationModel<T> {
+
+  public WorkModel(){
+    this.idWork = 0L;
+    this.name = "";
+    this.copies = Collections.emptySet();
+  }
+
+  public WorkModel(Long idWork, String name, Set<CopyModel> copies){
+    this.idWork = idWork;
+    this.name = name;
+    this.copies = copies;
+  }
 
   private Long idWork;
   private String name;

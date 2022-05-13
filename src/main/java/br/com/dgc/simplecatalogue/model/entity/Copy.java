@@ -15,7 +15,7 @@ import javax.persistence.Table;
  * @since 1.0
  */
 @Entity
-@Table(name = "tb_copy")
+@Table(name = "tb_copies")
 public class Copy {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +24,13 @@ public class Copy {
   @ManyToOne
   @JoinColumn(name = "idWork", nullable = false)
   private Work work;
+
+  public Copy(){}
+
+  public Copy(Long idCopy, Work work){
+    this.idCopy = idCopy;
+    this.work = work;
+  }
 
   public Long getIdCopy() {
     return idCopy;

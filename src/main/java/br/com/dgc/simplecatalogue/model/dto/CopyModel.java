@@ -22,6 +22,11 @@ public class CopyModel extends RepresentationModel<CopyModel> {
 
   private Work work;
 
+  public CopyModel(){
+    this.idCopy = 0L;
+    this.work = null;
+  }
+
   public CopyModel(Long idCopy, Work work) {
     this.idCopy = idCopy;
     this.work = work;

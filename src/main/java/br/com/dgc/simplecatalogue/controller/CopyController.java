@@ -33,7 +33,7 @@ public class CopyController {
   // Create
   @PostMapping("")
   public ResponseEntity<Copy> create(@Valid @RequestBody Copy copy) {
-    return ResponseEntity.ok(service.create(copy));
+    return ResponseEntity.status(HttpStatus.CREATED).body(service.create(copy));
   }
 
   // Read

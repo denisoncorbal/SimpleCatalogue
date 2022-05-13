@@ -1,5 +1,7 @@
 package br.com.dgc.simplecatalogue.model.entity;
 
+import java.util.Collections;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -10,6 +12,9 @@ import javax.persistence.Table;
  * @since 1.0
  */
 @Entity
-@Table(name = "tb_book")
+@Table(name = "tb_books")
 public class Book extends Work{
+  public Book(){super();}
+
+  public Book(Long idWork, String name, Set<Copy> copies){super(idWork, name, copies);}
 }
