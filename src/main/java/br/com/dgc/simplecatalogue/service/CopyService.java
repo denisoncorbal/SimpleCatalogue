@@ -2,6 +2,7 @@ package br.com.dgc.simplecatalogue.service;
 
 import br.com.dgc.simplecatalogue.model.entity.Copy;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,7 +17,7 @@ public interface CopyService {
 
   List<Copy> read();
 
-  Copy readById(Long id);
+  Optional<Copy> readById(Long id);
 
   Copy update(Copy work);
 

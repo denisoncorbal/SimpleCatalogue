@@ -2,6 +2,7 @@ package br.com.dgc.simplecatalogue.service;
 
 import br.com.dgc.simplecatalogue.model.entity.Work;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,7 +21,7 @@ public interface WorkService<T extends Work> {
   // READ
   List<T> read();
 
-  T readById(Long id);
+  Optional<T> readById(Long id);
 
   // UPDATE
   T update(T work);

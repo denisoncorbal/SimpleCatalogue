@@ -39,12 +39,17 @@ public class CopyController {
   // Read
   @GetMapping("")
   public ResponseEntity<List<Copy>> read() {
-    return ResponseEntity.ok(service.read());
+    List<Copy> copies = service.read();
+    if(copies.isEmpty()){
+      return ResponseEntity.status(HttpStatus.NO_CONTENT).body(copies);
+    }
+
+    return ResponseEntity.ok(copies);
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<Copy> readById(@Valid @PathVariable Long id) {
-    return ResponseEntity.ok(service.readById(id));
+    return ResponseEntity.ok(service.readById(id).orElse(new Copy()));
   }
 
   // Update
@@ -63,7 +68,7 @@ public class CopyController {
    */
   @PutMapping("/{id}")
   public ResponseEntity<Copy> update(@Valid @PathVariable Long id, @Valid @RequestBody Copy copy) {
-    if (service.readById(id) == null) {
+    if (service.readById(id).isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Copy());
     }
 

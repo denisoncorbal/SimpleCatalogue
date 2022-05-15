@@ -1,5 +1,7 @@
 package br.com.dgc.simplecatalogue;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -7,7 +9,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 class SimpleCatalogueApplicationTests {
 
 	@Test
-	void contextLoads() {
+	public void runApplication(){
+		try{
+			SimpleCatalogueApplication.main(new String[]{""});
+		}
+		catch (Exception e){
+			fail();
+		}
 	}
-
 }

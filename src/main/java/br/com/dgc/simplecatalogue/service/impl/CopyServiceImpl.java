@@ -4,6 +4,7 @@ import br.com.dgc.simplecatalogue.model.entity.Copy;
 import br.com.dgc.simplecatalogue.repository.CopyRepository;
 import br.com.dgc.simplecatalogue.service.CopyService;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 /**
@@ -33,8 +34,8 @@ public class CopyServiceImpl implements CopyService {
   }
 
   @Override
-  public Copy readById(Long id) {
-    return repository.findById(id).orElse(new Copy());
+  public Optional<Copy> readById(Long id) {
+    return repository.findById(id);
   }
 
   @Override

@@ -4,6 +4,7 @@ import br.com.dgc.simplecatalogue.model.entity.Book;
 import br.com.dgc.simplecatalogue.repository.impl.BookRepositoryImpl;
 import br.com.dgc.simplecatalogue.service.WorkService;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 /**
@@ -33,8 +34,8 @@ public class BookServiceImpl implements WorkService<Book> {
   }
 
   @Override
-  public Book readById(Long id) {
-    return repository.findById(id).orElse(new Book());
+  public Optional<Book> readById(Long id) {
+    return repository.findById(id);
   }
 
   @Override

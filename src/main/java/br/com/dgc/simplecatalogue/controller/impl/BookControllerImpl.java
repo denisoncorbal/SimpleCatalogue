@@ -35,27 +35,31 @@ public class BookControllerImpl implements WorkController<Book> {
   @Override
   @PostMapping("")
   public ResponseEntity<Book> create(@Valid @RequestBody Book book) {
-    return ResponseEntity.ok(service.create(book));
+    return ResponseEntity.status(HttpStatus.CREATED).body(service.create(book));
   }
   // Read
 
   @Override
   @GetMapping("")
   public ResponseEntity<List<Book>> read() {
-    return ResponseEntity.ok(service.read());
+    List<Book> books = service.read();
+    if(books.isEmpty()){
+      return ResponseEntity.status(HttpStatus.NO_CONTENT).body(books);
+    }
+    return ResponseEntity.ok(books);
   }
 
   @Override
   @GetMapping("/{id}")
   public ResponseEntity<Book> readById(@Valid @PathVariable Long id) {
-    return ResponseEntity.ok(service.readById(id));
+    return ResponseEntity.ok(service.readById(id).orElse(new Book()));
   }
   // Update
 
   @Override
   @PutMapping("/{id}")
   public ResponseEntity<Book> update(@Valid @PathVariable Long id, @Valid @RequestBody Book book) {
-    if (service.readById(id) == null) {
+    if (service.readById(id).isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Book());
     }
 

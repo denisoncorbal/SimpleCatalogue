@@ -1,7 +1,11 @@
 package br.com.dgc.simplecatalogue.model.dto;
 
+import javax.validation.constraints.NotNull;
+
 public class Session {
+  @NotNull
   private String login;
+  @NotNull
   private String token;
 
   public Session(){
