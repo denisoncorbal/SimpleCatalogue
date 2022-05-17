@@ -2,9 +2,9 @@ package br.com.dgc.simplecatalogue.unitarytests.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import br.com.dgc.simplecatalogue.unitarytests.model.dto.CopyModel;
-import br.com.dgc.simplecatalogue.unitarytests.model.dto.assembler.CopyModelAssembler;
-import br.com.dgc.simplecatalogue.unitarytests.model.entity.Copy;
+import br.com.dgc.simplecatalogue.model.dto.CopyModel;
+import br.com.dgc.simplecatalogue.model.dto.assembler.CopyModelAssembler;
+import br.com.dgc.simplecatalogue.model.entity.Copy;
 import io.jsonwebtoken.lang.Assert;
 import java.util.Random;
 import org.junit.jupiter.api.Test;

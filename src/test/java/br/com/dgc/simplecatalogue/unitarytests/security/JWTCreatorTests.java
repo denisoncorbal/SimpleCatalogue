@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import br.com.dgc.simplecatalogue.security.JWTCreator;
+import br.com.dgc.simplecatalogue.security.JWTObject;
+import br.com.dgc.simplecatalogue.security.SecurityConfig;
 import io.jsonwebtoken.ExpiredJwtException;
 import java.util.Date;
 import java.util.List;

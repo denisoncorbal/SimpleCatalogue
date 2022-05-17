@@ -3,7 +3,7 @@ package br.com.dgc.simplecatalogue.unitarytests.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import br.com.dgc.simplecatalogue.unitarytests.model.entity.Role;
+import br.com.dgc.simplecatalogue.model.entity.Role;
 import org.junit.jupiter.api.Test;
 
 public class RoleTests {

@@ -10,8 +10,9 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.BDDMockito.willDoNothing;
 
-import br.com.dgc.simplecatalogue.unitarytests.model.entity.Copy;
-import br.com.dgc.simplecatalogue.unitarytests.service.impl.CopyServiceImpl;
+import br.com.dgc.simplecatalogue.controller.CopyController;
+import br.com.dgc.simplecatalogue.model.entity.Copy;
+import br.com.dgc.simplecatalogue.service.impl.CopyServiceImpl;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;

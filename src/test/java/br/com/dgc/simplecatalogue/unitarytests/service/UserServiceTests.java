@@ -5,8 +5,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
-import br.com.dgc.simplecatalogue.unitarytests.model.entity.User;
-import br.com.dgc.simplecatalogue.unitarytests.repository.UserRepository;
+import br.com.dgc.simplecatalogue.model.entity.User;
+import br.com.dgc.simplecatalogue.repository.UserRepository;
+import br.com.dgc.simplecatalogue.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

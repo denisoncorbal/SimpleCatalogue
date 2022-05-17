@@ -4,10 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import br.com.dgc.simplecatalogue.unitarytests.model.dto.assembler.impl.BookModelAssemblerImpl;
-import br.com.dgc.simplecatalogue.unitarytests.model.dto.impl.BookModelImpl;
-import br.com.dgc.simplecatalogue.unitarytests.model.entity.Book;
-import br.com.dgc.simplecatalogue.unitarytests.model.entity.Copy;
+import br.com.dgc.simplecatalogue.model.dto.assembler.impl.BookModelAssemblerImpl;
+import br.com.dgc.simplecatalogue.model.dto.impl.BookModelImpl;
+import br.com.dgc.simplecatalogue.model.entity.Book;
+import br.com.dgc.simplecatalogue.model.entity.Copy;
 import io.jsonwebtoken.lang.Assert;
 import java.util.Collections;
 import java.util.Random;

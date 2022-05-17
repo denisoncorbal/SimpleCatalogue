@@ -6,9 +6,9 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.BDDMockito.willDoNothing;
 
-import br.com.dgc.simplecatalogue.unitarytests.model.entity.Book;
-import br.com.dgc.simplecatalogue.unitarytests.repository.impl.BookRepositoryImpl;
-import br.com.dgc.simplecatalogue.unitarytests.service.impl.BookServiceImpl;
+import br.com.dgc.simplecatalogue.model.entity.Book;
+import br.com.dgc.simplecatalogue.repository.impl.BookRepositoryImpl;
+import br.com.dgc.simplecatalogue.service.impl.BookServiceImpl;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;

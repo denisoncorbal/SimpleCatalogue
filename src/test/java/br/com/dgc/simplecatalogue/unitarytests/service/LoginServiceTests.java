@@ -3,9 +3,10 @@ package br.com.dgc.simplecatalogue.unitarytests.service;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import br.com.dgc.simplecatalogue.unitarytests.model.dto.Session;
-import br.com.dgc.simplecatalogue.unitarytests.model.entity.User;
-import br.com.dgc.simplecatalogue.unitarytests.security.SecurityConfig;
+import br.com.dgc.simplecatalogue.model.dto.Session;
+import br.com.dgc.simplecatalogue.model.entity.User;
+import br.com.dgc.simplecatalogue.security.SecurityConfig;
+import br.com.dgc.simplecatalogue.service.LoginService;
 import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
