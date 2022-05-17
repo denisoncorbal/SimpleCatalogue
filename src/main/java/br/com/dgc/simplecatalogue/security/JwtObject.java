@@ -3,16 +3,20 @@ package br.com.dgc.simplecatalogue.security;
 import java.util.Date;
 import java.util.List;
 
-public class JWTObject {
+/**
+ * Class representing the payload of Jwt token.
+ *
+ * @since 1.0
+ */
+public class JwtObject {
   private String subject;
   private Date issuedAt;
   private Date expiration;
   private List<String> roles;
 
-  public JWTObject() {
-  }
+  public JwtObject() {}
 
-  protected JWTObject(String subject, Date issuedAt, Date expiration, List<String> roles) {
+  protected JwtObject(String subject, Date issuedAt, Date expiration, List<String> roles) {
     this.subject = subject;
     this.issuedAt = issuedAt;
     this.expiration = expiration;
@@ -51,35 +55,44 @@ public class JWTObject {
     this.roles = roles;
   }
 
-  public static JWTObjectBuilder builder(){
-    return new JWTObjectBuilder();
+  public static JwtObjectBuilder builder() {
+    return new JwtObjectBuilder();
   }
 
-  public static class JWTObjectBuilder{
+  /**
+   * Class representing Builder pattern for a JwtObject.
+   *
+   * @see JwtObject
+   * @since 1.0
+   */
+  public static class JwtObjectBuilder {
     private String subject;
     private Date issuedAt;
     private Date expiration;
     private List<String> roles;
 
-    public JWTObjectBuilder subject(String subject){
+    public JwtObjectBuilder subject(String subject) {
       this.subject = subject;
       return this;
     }
-    public JWTObjectBuilder issuedAt(Date issuedAt){
+
+    public JwtObjectBuilder issuedAt(Date issuedAt) {
       this.issuedAt = issuedAt;
       return this;
     }
-    public JWTObjectBuilder expiration(Date expiration){
+
+    public JwtObjectBuilder expiration(Date expiration) {
       this.expiration = expiration;
       return this;
     }
-    public JWTObjectBuilder roles(List<String> roles){
+
+    public JwtObjectBuilder roles(List<String> roles) {
       this.roles = roles;
       return this;
     }
 
-    public JWTObject build(){
-      return new JWTObject(this.subject, this.issuedAt, this.expiration, this.roles);
+    public JwtObject build() {
+      return new JwtObject(this.subject, this.issuedAt, this.expiration, this.roles);
     }
   }
 }

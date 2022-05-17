@@ -43,7 +43,7 @@ public class BookControllerImpl implements WorkController<Book> {
   @GetMapping("")
   public ResponseEntity<List<Book>> read() {
     List<Book> books = service.read();
-    if(books.isEmpty()){
+    if (books.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NO_CONTENT).body(books);
     }
     return ResponseEntity.ok(books);

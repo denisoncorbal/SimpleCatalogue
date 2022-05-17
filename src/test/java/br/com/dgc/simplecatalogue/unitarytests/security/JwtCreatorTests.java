@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import br.com.dgc.simplecatalogue.security.JWTCreator;
-import br.com.dgc.simplecatalogue.security.JWTObject;
+import br.com.dgc.simplecatalogue.security.JwtCreator;
+import br.com.dgc.simplecatalogue.security.JwtObject;
 import br.com.dgc.simplecatalogue.security.SecurityConfig;
 import io.jsonwebtoken.ExpiredJwtException;
 import java.util.Date;
@@ -19,15 +19,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 @TestMethodOrder(OrderAnnotation.class)
-public class JWTCreatorTests {
+public class JwtCreatorTests {
   final private SecurityConfig securityConfig = new SecurityConfig(
           "Bearer",
           "2e7a58d9-1d28-421a-a2c9-75dd0490c1b3-bf9e7d16-1851-4e25-b98d-3360680da07a",
           60000L);
-  final private JWTObject jwtObject = JWTObject.builder()
+  final private JwtObject jwtObject = JwtObject.builder()
       .subject("0")
       .issuedAt(new Date((System.currentTimeMillis())))
-      .expiration(new Date(System.currentTimeMillis() + securityConfig.getEXPIRATION()))
+      .expiration(new Date(System.currentTimeMillis() + securityConfig.expiration))
       .roles(List.of("ADMIN"))
       .build();
 
@@ -38,14 +38,14 @@ public class JWTCreatorTests {
   @Order(1)
   public void givenAuthentication_whenLoginSucessfull_thenReturnStringToken(){
 
-    validToken = JWTCreator.create(securityConfig.getPREFIX(),
-      securityConfig.getSECRET_KEY(),
+    validToken = JwtCreator.create(securityConfig.prefix,
+      securityConfig.getSecretKey(),
       jwtObject);
 
     jwtObject.setExpiration(jwtObject.getIssuedAt());
 
-    expiredToken = JWTCreator.create(securityConfig.getPREFIX(),
-        securityConfig.getSECRET_KEY(),
+    expiredToken = JwtCreator.create(securityConfig.prefix,
+        securityConfig.getSecretKey(),
         jwtObject);
 
     assertNotNull(validToken);
@@ -58,15 +58,15 @@ public class JWTCreatorTests {
   @Test
   @Order(2)
   public void givenAuthentication_whenTokenValid_thenReturnJWTObject(){
-    JWTObject validJWTObject = JWTCreator.create(validToken, securityConfig.getPREFIX(), securityConfig.getSECRET_KEY());
+    JwtObject validJwtObject = JwtCreator.create(validToken, securityConfig.prefix, securityConfig.getSecretKey());
 
-    assertNotNull(validJWTObject);
+    assertNotNull(validJwtObject);
   }
 
   @Test
   @Order(3)
   public void givenAuthentication_whenExpiredToken_thenThrow(){
-    assertThrows(ExpiredJwtException.class, () -> JWTCreator.create(expiredToken, securityConfig.getPREFIX(), securityConfig.getSECRET_KEY()));
+    assertThrows(ExpiredJwtException.class, () -> JwtCreator.create(expiredToken, securityConfig.prefix, securityConfig.getSecretKey()));
   }
 
 }

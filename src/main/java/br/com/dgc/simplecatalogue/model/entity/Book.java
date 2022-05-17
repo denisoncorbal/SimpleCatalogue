@@ -12,8 +12,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "tb_books")
-public class Book extends Work{
-  public Book(){super();}
+public class Book extends Work {
+  public Book() {
+    super();
+  }
 
-  public Book(Long idWork, String name, Set<Copy> copies){super(idWork, name, copies);}
+  public Book(Long idWork, String name, Set<Copy> copies) {
+    super(idWork, name, copies);
+  }
 }

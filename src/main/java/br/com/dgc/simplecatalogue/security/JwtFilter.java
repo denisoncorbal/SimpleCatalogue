@@ -17,40 +17,51 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-public class JWTFilter extends OncePerRequestFilter {
-  final private SecurityConfig securityConfig;
+/**
+ * Filter responsible for check if the requisitions are authenticated.
+ *
+ * @see JwtObject
+ * @see WebSecurityConfig
+ * @see JwtCreator
+ * @since 1.0
+ */
+public class JwtFilter extends OncePerRequestFilter {
+  private final SecurityConfig securityConfig;
 
-  public JWTFilter(SecurityConfig securityConfig){
+  public JwtFilter(SecurityConfig securityConfig) {
     this.securityConfig = securityConfig;
   }
 
   @Override
-  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filter)
+  protected void doFilterInternal(
+      HttpServletRequest request, HttpServletResponse response, FilterChain filter)
       throws ServletException, IOException {
-    String token = request.getHeader(JWTCreator.HEADER_AUTHORIZATION);
-    try{
-      if(token != null && !token.isEmpty()){
-        JWTObject tokenObject = JWTCreator.create(token, securityConfig.getPREFIX(), securityConfig.getSECRET_KEY());
+    String token = request.getHeader(JwtCreator.HEADER_AUTHORIZATION);
+    try {
+      if (token != null && !token.isEmpty()) {
+        JwtObject tokenObject =
+            JwtCreator.create(token, securityConfig.prefix, securityConfig.getSecretKey());
 
         List<SimpleGrantedAuthority> authorities = authorities(tokenObject.getRoles());
 
-        UsernamePasswordAuthenticationToken userToken = new UsernamePasswordAuthenticationToken(
-            tokenObject.getSubject(), null, authorities);
+        UsernamePasswordAuthenticationToken userToken =
+            new UsernamePasswordAuthenticationToken(tokenObject.getSubject(), null, authorities);
 
         SecurityContextHolder.getContext().setAuthentication(userToken);
-      }
-      else{
+      } else {
         SecurityContextHolder.clearContext();
       }
-      filter.doFilter(request,response);
-    } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException |
-             SignatureException e){
+      filter.doFilter(request, response);
+    } catch (ExpiredJwtException
+        | UnsupportedJwtException
+        | MalformedJwtException
+        | SignatureException e) {
       e.printStackTrace();
       response.setStatus(HttpStatus.FORBIDDEN.value());
     }
   }
 
-  private List<SimpleGrantedAuthority> authorities(List<String> roles){
+  private List<SimpleGrantedAuthority> authorities(List<String> roles) {
     return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
   }
 }

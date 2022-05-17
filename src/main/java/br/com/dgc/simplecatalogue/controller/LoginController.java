@@ -14,14 +14,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Rest Controller who captures HttpRequests on base-path/login. Responsible for attempt of login in
+ * API.
+ *
+ * @see Login
+ * @see Session
+ * @since 1.0
+ */
 @RestController
 @RequestMapping("${spring.data.rest.base-path}/login")
 public class LoginController {
-  final private PasswordEncoder encoder;
+  private final PasswordEncoder encoder;
 
-  final private UserService userService;
+  private final UserService userService;
 
-  final private LoginService loginService;
+  private final LoginService loginService;
 
   LoginController(PasswordEncoder encoder, UserService userService, LoginService loginService) {
     this.encoder = encoder;
@@ -29,6 +37,17 @@ public class LoginController {
     this.loginService = loginService;
   }
 
+  /**
+   * Responsible to handle the attempt of login.
+   *
+   * @param login User information to attempt of login on API.
+   * @return Return a ResponseEntity with Session containing token and status Success if successful
+   *     login and void token and Unauthorized status if unsuccessful.
+   * @since 1.0
+   * @see Login
+   * @see Session
+   * @see ResponseEntity
+   */
   @PostMapping("")
   public ResponseEntity<Session> login(@Valid @RequestBody Login login) {
     User user = userService.readByName(login.getUsername());
@@ -47,6 +66,4 @@ public class LoginController {
 
     return ResponseEntity.ok(loginService.createSessionFromUser(user));
   }
-
-
 }

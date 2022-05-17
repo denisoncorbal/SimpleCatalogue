@@ -13,6 +13,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+/** Database representation of a User on API. */
 @Table(name = "tb_users")
 @Entity
 public class User implements Serializable {
@@ -36,9 +37,18 @@ public class User implements Serializable {
       inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
   private Set<Role> roles;
 
-  public User() {
-  }
+  public User() {}
 
+  /**
+   * All args constructor for a User.
+   *
+   * @param id Unique identifier for a User.
+   * @param username Unique username for a user.
+   * @param password Password for a user.
+   * @param name Real name for a user.
+   * @param roles Permissions of access for a user.
+   * @since 1.0
+   */
   public User(Long id, String username, String password, String name, Set<Role> roles) {
     this.id = id;
     this.username = username;

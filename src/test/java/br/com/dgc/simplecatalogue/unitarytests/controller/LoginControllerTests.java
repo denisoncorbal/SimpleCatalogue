@@ -10,8 +10,8 @@ import br.com.dgc.simplecatalogue.controller.LoginController;
 import br.com.dgc.simplecatalogue.model.dto.Login;
 import br.com.dgc.simplecatalogue.model.dto.Session;
 import br.com.dgc.simplecatalogue.model.entity.User;
-import br.com.dgc.simplecatalogue.security.JWTCreator;
-import br.com.dgc.simplecatalogue.security.JWTObject;
+import br.com.dgc.simplecatalogue.security.JwtCreator;
+import br.com.dgc.simplecatalogue.security.JwtObject;
 import br.com.dgc.simplecatalogue.security.SecurityConfig;
 import br.com.dgc.simplecatalogue.service.LoginService;
 import br.com.dgc.simplecatalogue.service.UserService;
@@ -41,13 +41,13 @@ public class LoginControllerTests {
 
   @InjectMocks private LoginController loginController;
 
-  static MockedStatic<JWTCreator> jwtCreatorMockedStatic;
+  static MockedStatic<JwtCreator> jwtCreatorMockedStatic;
 
   @BeforeTestClass
   public static void init() {
-    jwtCreatorMockedStatic = Mockito.mockStatic(JWTCreator.class);
+    jwtCreatorMockedStatic = Mockito.mockStatic(JwtCreator.class);
     jwtCreatorMockedStatic
-        .when(() -> JWTCreator.create(any(), any(), (JWTObject) any()))
+        .when(() -> JwtCreator.create(any(), any(), (JwtObject) any()))
         .thenReturn("token");
   }
 

@@ -37,10 +37,18 @@ public class CopyController {
   }
 
   // Read
+
+  /**
+   * Captures GET requisitions on copies and return all copies stored in database.
+   *
+   * @return ResponseEntity with body containing all copies stored in database and status NO_CONTENT
+   *     if has none e SUCESS if has any.
+   * @since 1.0
+   */
   @GetMapping("")
   public ResponseEntity<List<Copy>> read() {
     List<Copy> copies = service.read();
-    if(copies.isEmpty()){
+    if (copies.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NO_CONTENT).body(copies);
     }
 
@@ -61,7 +69,6 @@ public class CopyController {
    * @param copy Copy with data to be updated into database.
    * @return ResponseEntity with HttpStatus not found and empty Copy as body or HttpStatus ok and
    *     updated Copy as body.
-   *
    * @see ResponseEntity
    * @see Copy
    * @see HttpStatus

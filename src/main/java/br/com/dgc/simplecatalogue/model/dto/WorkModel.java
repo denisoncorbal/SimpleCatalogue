@@ -17,13 +17,21 @@ import org.springframework.hateoas.RepresentationModel;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public abstract class WorkModel<T extends WorkModel<? extends T>> extends RepresentationModel<T> {
 
-  public WorkModel(){
+  /** No args constructor for WorkModel. */
+  public WorkModel() {
     this.idWork = 0L;
     this.name = "";
     this.copies = Collections.emptySet();
   }
 
-  public WorkModel(Long idWork, String name, Set<CopyModel> copies){
+  /**
+   * All args constructor for WorkModel.
+   *
+   * @param idWork Unique identifier for WorkModel.
+   * @param name Name of WorkModel.
+   * @param copies Set of copies created from this WorkModel.
+   */
+  public WorkModel(Long idWork, String name, Set<CopyModel> copies) {
     this.idWork = idWork;
     this.name = name;
     this.copies = copies;

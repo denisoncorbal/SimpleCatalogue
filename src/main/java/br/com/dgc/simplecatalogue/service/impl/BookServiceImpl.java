@@ -1,8 +1,8 @@
 package br.com.dgc.simplecatalogue.service.impl;
 
+import br.com.dgc.simplecatalogue.model.entity.Book;
 import br.com.dgc.simplecatalogue.repository.impl.BookRepositoryImpl;
 import br.com.dgc.simplecatalogue.service.WorkService;
-import br.com.dgc.simplecatalogue.model.entity.Book;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;

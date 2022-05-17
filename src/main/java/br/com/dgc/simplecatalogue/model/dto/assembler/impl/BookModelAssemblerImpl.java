@@ -3,8 +3,8 @@ package br.com.dgc.simplecatalogue.model.dto.assembler.impl;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-import br.com.dgc.simplecatalogue.controller.impl.BookControllerImpl;
 import br.com.dgc.simplecatalogue.controller.CopyController;
+import br.com.dgc.simplecatalogue.controller.impl.BookControllerImpl;
 import br.com.dgc.simplecatalogue.model.dto.CopyModel;
 import br.com.dgc.simplecatalogue.model.dto.assembler.WorkModelAssembler;
 import br.com.dgc.simplecatalogue.model.dto.impl.BookModelImpl;

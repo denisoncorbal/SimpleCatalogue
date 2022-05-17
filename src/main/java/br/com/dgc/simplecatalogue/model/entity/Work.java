@@ -30,13 +30,21 @@ public abstract class Work implements Serializable {
   @OneToMany(mappedBy = "work")
   private Set<Copy> copies;
 
+  /** No args constructor for Work. */
   public Work() {
     this.idWork = 0L;
     this.name = "";
     this.copies = Collections.emptySet();
   }
 
-  public Work(Long idWork, String name, Set<Copy> copies){
+  /**
+   * All args constructor for Work.
+   *
+   * @param idWork Unique identifier for Work.
+   * @param name Name of Work.
+   * @param copies Set of copies created from this Work.
+   */
+  public Work(Long idWork, String name, Set<Copy> copies) {
     this.idWork = idWork;
     this.name = name;
     this.copies = copies;

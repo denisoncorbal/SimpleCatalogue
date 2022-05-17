@@ -25,12 +25,12 @@ public class Copy {
   @JoinColumn(name = "idWork", nullable = false)
   private Work work;
 
-  public Copy(){
+  public Copy() {
     this.idCopy = 0L;
     this.work = null;
   }
 
-  public Copy(Long idCopy, Work work){
+  public Copy(Long idCopy, Work work) {
     this.idCopy = idCopy;
     this.work = work;
   }

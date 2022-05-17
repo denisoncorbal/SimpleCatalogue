@@ -1,8 +1,8 @@
 package br.com.dgc.simplecatalogue.model.dto.impl;
 
-import br.com.dgc.simplecatalogue.model.entity.Book;
 import br.com.dgc.simplecatalogue.model.dto.CopyModel;
 import br.com.dgc.simplecatalogue.model.dto.WorkModel;
+import br.com.dgc.simplecatalogue.model.entity.Book;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import java.util.Set;
@@ -21,7 +21,7 @@ import org.springframework.hateoas.server.core.Relation;
 @Relation(itemRelation = "work")
 public class BookModelImpl extends WorkModel<BookModelImpl> {
 
-  public BookModelImpl(){
+  public BookModelImpl() {
     super();
   }
 
