@@ -23,7 +23,7 @@ public class JwtCreatorTests {
   final private SecurityConfig securityConfig = new SecurityConfig(
           "Bearer",
           "2e7a58d9-1d28-421a-a2c9-75dd0490c1b3-bf9e7d16-1851-4e25-b98d-3360680da07a",
-          60000L);
+          60000L, null);
   final private JwtObject jwtObject = JwtObject.builder()
       .subject("0")
       .issuedAt(new Date((System.currentTimeMillis())))
@@ -39,13 +39,13 @@ public class JwtCreatorTests {
   public void givenAuthentication_whenLoginSucessfull_thenReturnStringToken(){
 
     validToken = JwtCreator.create(securityConfig.prefix,
-      securityConfig.getSecretKey(),
+      securityConfig.secretKey,
       jwtObject);
 
     jwtObject.setExpiration(jwtObject.getIssuedAt());
 
     expiredToken = JwtCreator.create(securityConfig.prefix,
-        securityConfig.getSecretKey(),
+        securityConfig.secretKey,
         jwtObject);
 
     assertNotNull(validToken);
@@ -58,7 +58,7 @@ public class JwtCreatorTests {
   @Test
   @Order(2)
   public void givenAuthentication_whenTokenValid_thenReturnJWTObject(){
-    JwtObject validJwtObject = JwtCreator.create(validToken, securityConfig.prefix, securityConfig.getSecretKey());
+    JwtObject validJwtObject = JwtCreator.create(validToken, securityConfig.prefix, securityConfig.secretKey);
 
     assertNotNull(validJwtObject);
   }
@@ -66,7 +66,7 @@ public class JwtCreatorTests {
   @Test
   @Order(3)
   public void givenAuthentication_whenExpiredToken_thenThrow(){
-    assertThrows(ExpiredJwtException.class, () -> JwtCreator.create(expiredToken, securityConfig.prefix, securityConfig.getSecretKey()));
+    assertThrows(ExpiredJwtException.class, () -> JwtCreator.create(expiredToken, securityConfig.prefix, securityConfig.secretKey));
   }
 
 }

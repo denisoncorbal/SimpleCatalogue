@@ -40,7 +40,7 @@ public class JwtFilter extends OncePerRequestFilter {
     try {
       if (token != null && !token.isEmpty()) {
         JwtObject tokenObject =
-            JwtCreator.create(token, securityConfig.prefix, securityConfig.getSecretKey());
+            JwtCreator.create(token, securityConfig.getPrefix(), securityConfig.getSecretKey());
 
         List<SimpleGrantedAuthority> authorities = authorities(tokenObject.getRoles());
 

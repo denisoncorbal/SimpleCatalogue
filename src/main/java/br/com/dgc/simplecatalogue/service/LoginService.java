@@ -40,7 +40,7 @@ public class LoginService {
     session.setLogin(user.getUsername());
     JwtObject jwtObject = createJwtObjectFromUser(user);
     session.setToken(
-        JwtCreator.create(securityConfig.prefix, securityConfig.getSecretKey(), jwtObject));
+        JwtCreator.create(securityConfig.getPrefix(), securityConfig.getSecretKey(), jwtObject));
     return session;
   }
 
@@ -48,7 +48,7 @@ public class LoginService {
     return JwtObject.builder()
         .subject(String.valueOf(user.getId()))
         .issuedAt(new Date(System.currentTimeMillis()))
-        .expiration(new Date(System.currentTimeMillis() + securityConfig.expiration))
+        .expiration(new Date(System.currentTimeMillis() + securityConfig.getExpiration()))
         .roles(user.getRoles().stream().map(Role::getRolename).collect(Collectors.toList()))
         .build();
   }

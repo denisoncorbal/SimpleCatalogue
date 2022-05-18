@@ -1,6 +1,9 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/java,react,yarn,maven,intellij+all
-# Edit at https://www.toptal.com/developers/gitignore?templates=java,react,yarn,maven,intellij+all
+# Created by https://www.toptal.com/developers/gitignore/api/java,react,yarn,maven,intellij+all,dotenv
+# Edit at https://www.toptal.com/developers/gitignore?templates=java,react,yarn,maven,intellij+all,dotenv
+
+### dotenv ###
+.env
 
 ### Intellij+all ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
@@ -167,4 +170,4 @@ sketch
 # and uncomment the following lines
 # .pnp.*
 
-# End of https://www.toptal.com/developers/gitignore/api/java,react,yarn,maven,intellij+all
+# End of https://www.toptal.com/developers/gitignore/api/java,react,yarn,maven,intellij+all,dotenv
