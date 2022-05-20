@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  */
 public interface WorkController<T extends Work> {
 
-  String path = "${spring.data.rest.base-path}" + "/works";
+  String path = "${api.base-path}" + "/works";
 
   // Create
   ResponseEntity<T> create(@Valid @RequestBody T work);

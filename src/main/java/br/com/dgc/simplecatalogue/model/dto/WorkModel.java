@@ -22,6 +22,7 @@ public abstract class WorkModel<T extends WorkModel<? extends T>> extends Repres
     this.idWork = 0L;
     this.name = "";
     this.copies = Collections.emptySet();
+    this.authors = Collections.emptySet();
   }
 
   /**
@@ -30,16 +31,20 @@ public abstract class WorkModel<T extends WorkModel<? extends T>> extends Repres
    * @param idWork Unique identifier for WorkModel.
    * @param name Name of WorkModel.
    * @param copies Set of copies created from this WorkModel.
+   * @param authors Set of authors of the WorkModel.
    */
-  public WorkModel(Long idWork, String name, Set<CopyModel> copies) {
+  public WorkModel(Long idWork, String name, Set<CopyModel> copies, Set<? extends AuthorModel> authors) {
     this.idWork = idWork;
     this.name = name;
     this.copies = copies;
+    this.authors = authors;
   }
 
   private Long idWork;
   private String name;
   private Set<CopyModel> copies;
+
+  private Set<? extends AuthorModel> authors;
 
   public Long getIdWork() {
     return idWork;
@@ -63,5 +68,13 @@ public abstract class WorkModel<T extends WorkModel<? extends T>> extends Repres
 
   public void setCopies(Set<CopyModel> copies) {
     this.copies = copies;
+  }
+
+  public Set<? extends AuthorModel> getAuthors() {
+    return authors;
+  }
+
+  public void setAuthors(Set<? extends AuthorModel> authors) {
+    this.authors = authors;
   }
 }

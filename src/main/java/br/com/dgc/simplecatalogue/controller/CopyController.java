@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 1.0
  */
 @RestController
-@RequestMapping("${spring.data.rest.base-path}/copies")
+@RequestMapping("${api.base-path}/copies")
 public class CopyController {
   private final CopyServiceImpl service;
 

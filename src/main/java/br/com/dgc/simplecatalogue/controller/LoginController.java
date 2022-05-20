@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 1.0
  */
 @RestController
-@RequestMapping("${spring.data.rest.base-path}/login")
+@RequestMapping("${api.base-path}/login")
 public class LoginController {
   private final PasswordEncoder encoder;
 

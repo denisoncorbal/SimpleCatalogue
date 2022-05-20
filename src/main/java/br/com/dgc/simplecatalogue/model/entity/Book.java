@@ -15,13 +15,10 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "tb_books", indexes = {
-    @Index(columnList = "authors"),
     @Index(columnList = "isbn"),
     @Index(columnList = "cdd")
 })
 public class Book extends Work {
-
-  private Set<String> authors;
 
   @Column(length = 13)
   private String isbn;
@@ -40,12 +37,43 @@ public class Book extends Work {
     super();
   }
 
-  public Book(Long idWork, String name, Set<Copy> copies, Set<String> authors, String isbn, String issn, String language, String cdd) {
-    super(idWork, name, copies);
-    this.authors = authors;
+  public Book(Long idWork, String name, Set<Copy> copies, Set<Author> authors, String isbn, String issn, String language, String cdd) {
+    super(idWork, name, copies, authors);
     this.isbn = isbn;
     this.issn = issn;
     this.language = language;
+    this.cdd = cdd;
+  }
+
+  public String getIsbn() {
+    return isbn;
+  }
+
+  public void setIsbn(String isbn) {
+    this.isbn = isbn;
+  }
+
+  public String getIssn() {
+    return issn;
+  }
+
+  public void setIssn(String issn) {
+    this.issn = issn;
+  }
+
+  public String getLanguage() {
+    return language;
+  }
+
+  public void setLanguage(String language) {
+    this.language = language;
+  }
+
+  public String getCdd() {
+    return cdd;
+  }
+
+  public void setCdd(String cdd) {
     this.cdd = cdd;
   }
 }

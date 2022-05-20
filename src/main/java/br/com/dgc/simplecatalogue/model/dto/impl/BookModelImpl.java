@@ -1,11 +1,13 @@
 package br.com.dgc.simplecatalogue.model.dto.impl;
 
+import br.com.dgc.simplecatalogue.model.dto.AuthorModel;
 import br.com.dgc.simplecatalogue.model.dto.CopyModel;
 import br.com.dgc.simplecatalogue.model.dto.WorkModel;
 import br.com.dgc.simplecatalogue.model.entity.Book;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import java.util.Set;
+import javax.persistence.Column;
 import org.springframework.hateoas.server.core.Relation;
 
 /**
@@ -21,6 +23,14 @@ import org.springframework.hateoas.server.core.Relation;
 @Relation(itemRelation = "work")
 public class BookModelImpl extends WorkModel<BookModelImpl> {
 
+  private String isbn;
+
+  private String issn;
+
+  private String language;
+
+  private String cdd;
+
   public BookModelImpl() {
     super();
   }
@@ -34,8 +44,36 @@ public class BookModelImpl extends WorkModel<BookModelImpl> {
    * @see Book
    * @since 1.0
    */
-  protected BookModelImpl(Long idWork, String name, Set<CopyModel> copies) {
-    super(idWork, name, copies);
+  protected BookModelImpl(
+      Long idWork,
+      String name,
+      Set<CopyModel> copies,
+      Set<? extends AuthorModel> authors,
+      String isbn,
+      String issn,
+      String language,
+      String cdd) {
+    super(idWork, name, copies, authors);
+    this.isbn = isbn;
+    this.issn = issn;
+    this.language = language;
+    this.cdd = cdd;
+  }
+
+  public String getIsbn() {
+    return isbn;
+  }
+
+  public String getIssn() {
+    return issn;
+  }
+
+  public String getLanguage() {
+    return language;
+  }
+
+  public String getCdd() {
+    return cdd;
   }
 
   public static BookModelBuilder builder() {
@@ -54,6 +92,16 @@ public class BookModelImpl extends WorkModel<BookModelImpl> {
     private String name;
     private Set<CopyModel> copies;
 
+    private Set<? extends AuthorModel> authors;
+
+    private String isbn;
+
+    private String issn;
+
+    private String language;
+
+    private String cdd;
+
     BookModelBuilder() {}
 
     public BookModelBuilder idWork(Long idWork) {
@@ -71,8 +119,41 @@ public class BookModelImpl extends WorkModel<BookModelImpl> {
       return this;
     }
 
+    public BookModelBuilder authors(Set<? extends AuthorModel> authors) {
+      this.authors = authors;
+      return this;
+    }
+
+    public BookModelBuilder isbn(String isbn) {
+      this.isbn = isbn;
+      return this;
+    }
+
+    public BookModelBuilder issn(String issn) {
+      this.issn = issn;
+      return this;
+    }
+
+    public BookModelBuilder language(String language) {
+      this.language = language;
+      return this;
+    }
+
+    public BookModelBuilder cdd(String cdd) {
+      this.cdd = cdd;
+      return this;
+    }
+
     public BookModelImpl build() {
-      return new BookModelImpl(this.idWork, this.name, this.copies);
+      return new BookModelImpl(
+          this.idWork,
+          this.name,
+          this.copies,
+          this.authors,
+          this.isbn,
+          this.issn,
+          this.language,
+          this.cdd);
     }
   }
 }
