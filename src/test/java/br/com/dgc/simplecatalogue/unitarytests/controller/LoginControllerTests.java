@@ -2,9 +2,12 @@ package br.com.dgc.simplecatalogue.unitarytests.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 
 import br.com.dgc.simplecatalogue.controller.LoginController;
 import br.com.dgc.simplecatalogue.model.dto.Login;
@@ -12,6 +15,7 @@ import br.com.dgc.simplecatalogue.model.dto.Session;
 import br.com.dgc.simplecatalogue.model.entity.User;
 import br.com.dgc.simplecatalogue.security.JwtCreator;
 import br.com.dgc.simplecatalogue.security.JwtObject;
+import br.com.dgc.simplecatalogue.security.JwtUserDetailsService;
 import br.com.dgc.simplecatalogue.security.SecurityConfig;
 import br.com.dgc.simplecatalogue.service.LoginService;
 import br.com.dgc.simplecatalogue.service.UserService;
@@ -25,19 +29,16 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.event.annotation.BeforeTestClass;
 
 @ExtendWith(MockitoExtension.class)
 public class LoginControllerTests {
 
-  @Mock private PasswordEncoder encoder;
-
-  @Mock private SecurityConfig securityConfig;
-
-  @Mock private UserService userService;
-
   @Mock private LoginService loginService;
+
+  @Mock private JwtUserDetailsService jwtUserDetailsService;
 
   @InjectMocks private LoginController loginController;
 
@@ -52,23 +53,20 @@ public class LoginControllerTests {
   }
 
   @Test
-  public void givenUserNotInDatabase_whenPostToLogin_thenRespondUnauthorized() {
-    given(userService.readByName(any())).willReturn(new User());
+  public void givenUserNotInDatabase_whenPostToLogin_thenRespondUnauthorized() throws Exception {
+    doThrow(new Exception()).when(loginService).authenticate(any(), any());
 
     ResponseEntity<Session> session = loginController.login(new Login("admin", "admin"));
 
-    then(userService).should().readByName("admin");
-
     assertEquals(HttpStatus.UNAUTHORIZED, session.getStatusCode());
+
   }
 
   @Test
-  public void givenUserNotInDatabase_whenPostToLogin_thenRespondVoidSession() {
-    given(userService.readByName(any())).willReturn(new User());
+  public void givenUserNotInDatabase_whenPostToLogin_thenRespondVoidSession() throws Exception {
+    doThrow(new Exception()).when(loginService).authenticate(any(), any());
 
     ResponseEntity<Session> session = loginController.login(new Login("admin", "admin"));
-
-    then(userService).should().readByName("admin");
 
     assertEquals("", session.getBody().getLogin());
     assertEquals("", session.getBody().getToken());
@@ -76,30 +74,22 @@ public class LoginControllerTests {
 
   @Test
   public void givenCorrectUser_whenPostToLogin_thenRespondSuccess() {
-    given(userService.readByName((any())))
-        .willReturn(new User(0L, "admin", "admin", "name", Collections.emptySet()));
-    given(encoder.matches(any(), any())).willReturn(true);
     given(loginService.createSessionFromUser(any())).willReturn(new Session());
 
     ResponseEntity<Session> session = loginController.login(new Login("admin", "admin"));
 
-    then(userService).should().readByName("admin");
-    then(encoder).should().matches("admin", "admin");
+    then(loginService).should().createSessionFromUser(any());
 
     assertEquals(HttpStatus.OK, session.getStatusCode());
   }
 
   @Test
   public void givenCorrectUser_whenPostToLogin_thenRespondNotVoidSession() {
-    given(userService.readByName((any())))
-        .willReturn(new User(0L, "admin", "admin", "name", Collections.emptySet()));
-    given(encoder.matches(any(), any())).willReturn(true);
     given(loginService.createSessionFromUser(any())).willReturn(new Session("login", "token"));
 
     ResponseEntity<Session> session = loginController.login(new Login("admin", "admin"));
 
-    then(userService).should().readByName("admin");
-    then(encoder).should().matches("admin", "admin");
+    then(loginService).should().createSessionFromUser(any());
 
     assertFalse(session.getBody().getLogin().isEmpty());
     assertFalse(session.getBody().getToken().isEmpty());

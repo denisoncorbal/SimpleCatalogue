@@ -26,7 +26,14 @@ public class BookServiceTests {
   @InjectMocks
   private BookServiceImpl service;
 
-  final private Book validBook = new Book(0L, "Book", Collections.emptySet());
+  final private Book validBook = new Book(0L,
+      "book",
+      Collections.emptySet(),
+      Collections.emptySet(),
+      "isbn",
+      "issn",
+      "language",
+      "cdd");
 
   @Test
   public void create(){

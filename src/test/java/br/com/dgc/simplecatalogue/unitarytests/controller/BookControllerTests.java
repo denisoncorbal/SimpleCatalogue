@@ -34,7 +34,14 @@ public class BookControllerTests {
 
   final private Book voidBook = new Book();
 
-  final private Book validBook = new Book(0L, "book", Collections.emptySet());
+  final private Book validBook = new Book(0L,
+      "book",
+      Collections.emptySet(),
+      Collections.emptySet(),
+      "isbn",
+      "issn",
+      "language",
+      "cdd");
 
   @Test
   public void givenValidBook_whenPostToBook_thenRespondCreated(){

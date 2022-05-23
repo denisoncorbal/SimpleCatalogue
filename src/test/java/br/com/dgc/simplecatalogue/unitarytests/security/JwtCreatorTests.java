@@ -23,11 +23,11 @@ public class JwtCreatorTests {
   final private SecurityConfig securityConfig = new SecurityConfig(
           "Bearer",
           "2e7a58d9-1d28-421a-a2c9-75dd0490c1b3-bf9e7d16-1851-4e25-b98d-3360680da07a",
-          60000L, null);
+          60000L);
   final private JwtObject jwtObject = JwtObject.builder()
       .subject("0")
       .issuedAt(new Date((System.currentTimeMillis())))
-      .expiration(new Date(System.currentTimeMillis() + securityConfig.expiration))
+      .expiration(new Date(System.currentTimeMillis() + securityConfig.getExpiration()))
       .roles(List.of("ADMIN"))
       .build();
 
@@ -38,14 +38,14 @@ public class JwtCreatorTests {
   @Order(1)
   public void givenAuthentication_whenLoginSucessfull_thenReturnStringToken(){
 
-    validToken = JwtCreator.create(securityConfig.prefix,
-      securityConfig.secretKey,
+    validToken = JwtCreator.create(securityConfig.getPrefix(),
+      securityConfig.getSecretKey(),
       jwtObject);
 
     jwtObject.setExpiration(jwtObject.getIssuedAt());
 
-    expiredToken = JwtCreator.create(securityConfig.prefix,
-        securityConfig.secretKey,
+    expiredToken = JwtCreator.create(securityConfig.getPrefix(),
+        securityConfig.getSecretKey(),
         jwtObject);
 
     assertNotNull(validToken);
@@ -58,7 +58,7 @@ public class JwtCreatorTests {
   @Test
   @Order(2)
   public void givenAuthentication_whenTokenValid_thenReturnJWTObject(){
-    JwtObject validJwtObject = JwtCreator.create(validToken, securityConfig.prefix, securityConfig.secretKey);
+    JwtObject validJwtObject = JwtCreator.create(validToken, securityConfig.getPrefix(), securityConfig.getSecretKey());
 
     assertNotNull(validJwtObject);
   }
@@ -66,7 +66,7 @@ public class JwtCreatorTests {
   @Test
   @Order(3)
   public void givenAuthentication_whenExpiredToken_thenThrow(){
-    assertThrows(ExpiredJwtException.class, () -> JwtCreator.create(expiredToken, securityConfig.prefix, securityConfig.secretKey));
+    assertThrows(ExpiredJwtException.class, () -> JwtCreator.create(expiredToken, securityConfig.getPrefix(), securityConfig.getSecretKey()));
   }
 
 }

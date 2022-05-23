@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import br.com.dgc.simplecatalogue.model.dto.assembler.impl.BookModelAssemblerImpl;
 import br.com.dgc.simplecatalogue.model.dto.impl.BookModelImpl;
 import br.com.dgc.simplecatalogue.model.entity.Book;
+import br.com.dgc.simplecatalogue.model.entity.BookAuthor;
 import br.com.dgc.simplecatalogue.model.entity.Copy;
 import io.jsonwebtoken.lang.Assert;
 import java.util.Collections;
@@ -21,7 +22,14 @@ public class BookTests {
   @Test
   public void givenBook_whenConvertToDTO_thenReturnBookModelImpl() {
     Book book = new Book();
-    Book book2 = new Book(0L, "name", Collections.emptySet());
+    Book book2 = new Book(0L,
+        "book",
+        Collections.emptySet(),
+        Collections.emptySet(),
+        "isbn",
+        "issn",
+        "language",
+        "cdd");
     BookModelImpl bookModel = BookModelImpl.builder()
         .idWork(0L)
         .name("name")
@@ -42,7 +50,12 @@ public class BookTests {
         new Book(
             new Random().nextLong(),
             Character.getName(new Random().nextInt(126)),
-            Set.of(new Copy()));
+            Set.of(new Copy()),
+            Set.of(new BookAuthor()),
+            Character.getName(new Random().nextInt(126)),
+            Character.getName(new Random().nextInt(126)),
+            Character.getName(new Random().nextInt(126)),
+            Character.getName(new Random().nextInt(126)));
     BookModelImpl model = assembler.toModel(book);
 
     assertEquals(model.getIdWork(), book.getIdWork());
