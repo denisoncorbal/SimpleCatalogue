@@ -14,7 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
@@ -25,11 +29,16 @@ import org.springframework.web.filter.OncePerRequestFilter;
  * @see JwtCreator
  * @since 1.0
  */
+
+@Component
 public class JwtFilter extends OncePerRequestFilter {
   private final SecurityConfig securityConfig;
 
-  public JwtFilter(SecurityConfig securityConfig) {
+  private final JwtUserDetailsService jwtUserDetailsService;
+
+  public JwtFilter(SecurityConfig securityConfig, JwtUserDetailsService jwtUserDetailsService) {
     this.securityConfig = securityConfig;
+    this.jwtUserDetailsService = jwtUserDetailsService;
   }
 
   @Override
@@ -42,12 +51,26 @@ public class JwtFilter extends OncePerRequestFilter {
         JwtObject tokenObject =
             JwtCreator.create(token, securityConfig.getPrefix(), securityConfig.getSecretKey());
 
+        if(tokenObject.getSubject() != null && SecurityContextHolder.getContext().getAuthentication() == null){
+          UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(tokenObject.getSubject());
+
+          UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+              userDetails, null, userDetails.getAuthorities());
+
+          usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+          SecurityContext context = SecurityContextHolder.createEmptyContext();
+          context.setAuthentication(usernamePasswordAuthenticationToken);
+          SecurityContextHolder.setContext(context);
+        }
+/*
         List<SimpleGrantedAuthority> authorities = authorities(tokenObject.getRoles());
 
         UsernamePasswordAuthenticationToken userToken =
             new UsernamePasswordAuthenticationToken(tokenObject.getSubject(), null, authorities);
 
         SecurityContextHolder.getContext().setAuthentication(userToken);
+ */
       } else {
         SecurityContextHolder.clearContext();
       }

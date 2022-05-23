@@ -8,6 +8,7 @@ import br.com.dgc.simplecatalogue.security.JwtObject;
 import br.com.dgc.simplecatalogue.security.SecurityConfig;
 import java.util.Date;
 import java.util.stream.Collectors;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 /**
@@ -35,7 +36,7 @@ public class LoginService {
    * @see JwtObject
    * @see JwtCreator
    */
-  public Session createSessionFromUser(User user) {
+  public Session createSessionFromUser(UserDetails user) {
     Session session = new Session();
     session.setLogin(user.getUsername());
     JwtObject jwtObject = createJwtObjectFromUser(user);
@@ -44,12 +45,13 @@ public class LoginService {
     return session;
   }
 
-  private JwtObject createJwtObjectFromUser(User user) {
+  private JwtObject createJwtObjectFromUser(UserDetails user) {
     return JwtObject.builder()
-        .subject(String.valueOf(user.getId()))
+        .subject(user.getUsername())
         .issuedAt(new Date(System.currentTimeMillis()))
         .expiration(new Date(System.currentTimeMillis() + securityConfig.getExpiration()))
-        .roles(user.getRoles().stream().map(Role::getRolename).collect(Collectors.toList()))
+        .roles(user.getAuthorities().stream().map(grantedAuthority -> grantedAuthority.getAuthority()).collect(
+            Collectors.toList()))
         .build();
   }
 }

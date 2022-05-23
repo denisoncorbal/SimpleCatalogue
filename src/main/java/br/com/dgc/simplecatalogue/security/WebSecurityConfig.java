@@ -1,14 +1,16 @@
 package br.com.dgc.simplecatalogue.security;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
@@ -19,51 +21,48 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * @see WebSecurityConfigurerAdapter
  * @since 1.0
  */
-@Configuration
+
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig {
+  private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+  private JwtUserDetailsService jwtUserDetailsService;
+  private JwtFilter jwtFilter;
+
+  public WebSecurityConfig(JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
+      JwtUserDetailsService jwtUserDetailsService,
+      JwtFilter jwtFilter){
+    this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
+    this.jwtUserDetailsService = jwtUserDetailsService;
+    this.jwtFilter = jwtFilter;
+  }
 
   @Bean
-  public BCryptPasswordEncoder encoder() {
+  public PasswordEncoder passwordEncoder(){
     return new BCryptPasswordEncoder();
   }
 
-  private final SecurityConfig securityConfig;
-
-  public WebSecurityConfig(SecurityConfig securityConfig) {
-    this.securityConfig = securityConfig;
+  @Bean
+  public SecurityFilterChain web(HttpSecurity httpSecurity) throws Exception{
+    return httpSecurity.csrf().disable()
+        .authorizeHttpRequests().antMatchers("/api/v1/login").permitAll()
+        .antMatchers("/**").hasRole("ADMIN")
+        .anyRequest().authenticated()
+        .and()
+        .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+        .and()
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .and()
+        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+        .build();
   }
-
-  private static final String[] SWAGGER_WHITELIST = {
-    "/v2/api-docs",
-    "/swagger-resources",
-    "/swagger-resources/**",
-    "/configuration/ui",
-    "/configuration/security",
-    "/swagger-ui.html",
-    "/webjars/**"
+  @Bean
+  public AuthenticationManager authenticationManager() throws Exception {
+    return new AuthenticationManagerBuilder(
+        new ObjectPostProcessor<Object>() {
+          @Override
+          public <O extends Object> O postProcess(O object) {
+            return object;
+          }
+        }).userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder()).and().build();
   };
-
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http.headers().frameOptions().disable();
-    http.cors()
-        .and()
-        .csrf()
-        .disable()
-        .addFilterAfter(new JwtFilter(securityConfig), UsernamePasswordAuthenticationFilter.class)
-        .authorizeHttpRequests()
-        .antMatchers(SWAGGER_WHITELIST)
-        .permitAll()
-        .antMatchers(HttpMethod.POST, "/login")
-        .permitAll()
-        .antMatchers("/**")
-        .permitAll()
-        .anyRequest()
-        .authenticated()
-        .and()
-        .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-  }
 }
