@@ -7,7 +7,6 @@ import br.com.dgc.simplecatalogue.model.entity.Book;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import java.util.Set;
-import javax.persistence.Column;
 import org.springframework.hateoas.server.core.Relation;
 
 /**

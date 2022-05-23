@@ -1,7 +1,6 @@
 package br.com.dgc.simplecatalogue.security;
 
 import br.com.dgc.simplecatalogue.repository.UserRepository;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

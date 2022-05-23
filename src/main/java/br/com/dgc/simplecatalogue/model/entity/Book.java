@@ -1,6 +1,5 @@
 package br.com.dgc.simplecatalogue.model.entity;
 
-import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;

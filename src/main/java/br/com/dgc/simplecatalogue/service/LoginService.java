@@ -1,8 +1,6 @@
 package br.com.dgc.simplecatalogue.service;
 
 import br.com.dgc.simplecatalogue.model.dto.Session;
-import br.com.dgc.simplecatalogue.model.entity.Role;
-import br.com.dgc.simplecatalogue.model.entity.User;
 import br.com.dgc.simplecatalogue.security.JwtCreator;
 import br.com.dgc.simplecatalogue.security.JwtObject;
 import br.com.dgc.simplecatalogue.security.SecurityConfig;

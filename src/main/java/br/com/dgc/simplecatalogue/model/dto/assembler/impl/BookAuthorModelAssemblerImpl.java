@@ -3,15 +3,12 @@ package br.com.dgc.simplecatalogue.model.dto.assembler.impl;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-import br.com.dgc.simplecatalogue.controller.CopyController;
 import br.com.dgc.simplecatalogue.controller.impl.BookAuthorControllerImpl;
 import br.com.dgc.simplecatalogue.controller.impl.BookControllerImpl;
-import br.com.dgc.simplecatalogue.model.dto.CopyModel;
 import br.com.dgc.simplecatalogue.model.dto.WorkModel;
 import br.com.dgc.simplecatalogue.model.dto.assembler.AuthorModelAssembler;
 import br.com.dgc.simplecatalogue.model.dto.impl.BookAuthorModelImpl;
 import br.com.dgc.simplecatalogue.model.dto.impl.BookModelImpl;
-import br.com.dgc.simplecatalogue.model.dto.impl.BookModelImpl.BookModelBuilder;
 import br.com.dgc.simplecatalogue.model.entity.BookAuthor;
 import br.com.dgc.simplecatalogue.model.entity.Work;
 import java.util.Collections;
